@@ -15,6 +15,7 @@
     "morgan": "~1.0.0",
     "node-twitter-api": "^1.2.2",
     "orchestrate": "^0.1.2",
-    "static-favicon": "~1.0.0"
+    "static-favicon": "~1.0.0",
+    "twit": "^1.1.15"
   }
 }

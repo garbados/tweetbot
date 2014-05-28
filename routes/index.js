@@ -12,7 +12,7 @@ var T = new Twit({
 });
 //
 var stream = T.stream('statuses/filter', {
-  track: 'gaming, games, #gameclash, #gamedev, xbox, xboxlive, xbox360, xboxone, #xboxlive, #cod',
+  track: '#gaming, #videogames, #games, #gameclash, #gamedev, #xbox, #xboxlive, #xbox360, #xboxone, #xboxlive, #cod',
   language: 'en'
 });
 /** the stream **/
@@ -26,27 +26,40 @@ stream.on('tweet', function (tweet) {
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  db.search("tweets", "*")
+
+  db.newSearchBuilder()
+    .collection("tweets")
+    .limit(10)
+    .offset(0)
+    .query("*")
     .then(function (results){
-
-    })
-    .fail(function (err){
-
+      if(results.body.count > 0){
+        res.render("index", {tweets: results.body.results});
+      }
     });
-    res.render("index");
 });
 
-router.get('/gameclash_tweets', function (req, res){
-  if(!req.param("page")){
+router.get('/gameclash_tweets:page', function (req, res){
+  if(!req.params.page){
     res.redirect("/");
   } else {
 
-    var offset = parseInt(req.param("page") * 100);
-    // db.search("tweets", "#gameclash^100")
-    //   .then(function (results){
-    //
-    //   });
   }
+});
+
+router.get('/load/tweets/:page', function (req, res){
+    db.newSearchBuilder()
+      .collection("tweets")
+      .limit(10)
+      .offset((parseInt(req.params.page) * 10) - 10)
+      .query("*")
+      .then(function (results){
+        console.log(results.body.count);
+        res.json({results: results.body});
+      })
+      .fail(function (err){
+        console.log(err);
+      });
 });
 
 module.exports = router;

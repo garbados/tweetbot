@@ -1,7 +1,13 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width , initial-scale=1.0")
+    title Twitter Bot
+    link(rel='stylesheet', href='/css/app.css')
+    script("/bower_components/modernizr/modernizr.js")
   body
     block content
+    script(src="bower_components/jquery/dist/jquery.min.js")
+    script(src="bower_components/foundation/js/foundation.min.js")
+    script(src="js/app.js")

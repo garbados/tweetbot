@@ -10,6 +10,8 @@ var T = new Twit({
   , access_token:         '...'
   , access_token_secret:  '...'
 });
+
+
 //
 var stream = T.stream('statuses/filter', {
   track: '#gaming, #videogames, #games, #gameclash, #gamedev, #xbox, #xboxlive, #xbox360, #xboxone, #xboxlive, #cod',
@@ -17,6 +19,9 @@ var stream = T.stream('statuses/filter', {
 });
 /** the stream **/
 stream.on('tweet', function (tweet) {
+  T.post('statuses/retweet/:id', { id: tweet.id }, function (err, data, response) {
+
+  });
   db.put("tweets", tweet.id, tweet);
 });
 

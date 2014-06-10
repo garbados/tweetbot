@@ -1,20 +1,21 @@
 var express = require('express');
 var router = express.Router();
 
-var db = require('orchestrate')("...")
+var db = require('orchestrate')(process.env.ORCHESTRATE_API_KEY)
 , Twit = require('twit')
 
 var T = new Twit({
-    consumer_key:         '...'
-  , consumer_secret:      '...'
-  , access_token:         '...'
-  , access_token_secret:  '...'
+    consumer_key:         process.env.TWITTER_API_KEY
+  , consumer_secret:      process.env.TWITTER_API_SECRET
+  , access_token:         process.env.TWITTER_ACCESS_TOKEN
+  , access_token_secret:  process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
 
 //
+var default_topics = '#gaming, #videogames, #games, #gameclash, #gamedev, #xbox, #xboxlive, #xbox360, #xboxone, #xboxlive, #cod';
 var stream = T.stream('statuses/filter', {
-  track: '#gaming, #videogames, #games, #gameclash, #gamedev, #xbox, #xboxlive, #xbox360, #xboxone, #xboxlive, #cod',
+  track: process.env.TWITTER_TOPICS || default_topics,
   language: 'en'
 });
 /** the stream **/
